@@ -1,0 +1,132 @@
+# We are using the Satorix Rails CI image from https://hub.docker.com/r/satorix/rails/
+image: 'satorix/rails:18'
+
+
+# Global caching directives.
+cache:
+  key: "$CI_PROJECT_ID"
+  paths:
+    - 'tmp/satorix/cache' # To cache buildpack gems between runs.
+
+
+.satorix: &satorix
+  script:
+    - gem install satorix --source https://gems.iexposure.com --no-document
+    - satorix
+
+
+###############################################################################
+#
+# Below are resources that will be available as part of the CI pipeline.
+# Uncomment the resources matching the testing requirements of your application.
+# Feel free to delete unused/unwanted resource entries.
+#
+###############################################################################
+
+
+# Configure postgresql environment variables (https://hub.docker.com/r/_/postgres/)
+# These defaults should work well for all implementations.
+.use_postgres: &use_postgres
+  services:
+    - postgres:11.0
+  variables:
+    DB_HOST: postgres
+    POSTGRES_DB: test
+    POSTGRES_PASSWORD: password
+    POSTGRES_USER: root
+
+
+## https://github.com/flynn/flynn/issues/3505
+## https://hub.docker.com/r/_/mariadb/
+## These defaults should work well for all implementations.
+#.use_mariadb: &use_mariadb
+#  services:
+#    - mariadb:10.1
+#  variables:
+#    DB_HOST: mariadb
+#    MYSQL_DATABASE: test
+#    MYSQL_ROOT_PASSWORD: password # The default user is: root
+#
+
+
+## https://github.com/flynn/flynn/issues/3505
+## https://hub.docker.com/r/_/mysql/
+## These defaults should work well for all implementations.
+#.use_mysql: &use_mysql
+#  services:
+#    - mysql:5.7
+#  variables:
+#    DB_HOST: mysql
+#    MYSQL_DATABASE: test
+#    MYSQL_ROOT_PASSWORD: password # The default user is: root
+
+
+###############################################################################
+#
+# Below are jobs that will run as part of the CI pipeline.
+# Uncomment the jobs you want to use for your application.
+# Feel free to delete unused/unwanted job entries.
+#
+###############################################################################
+
+
+## Brakeman
+## Static analysis security scanner for Ruby on Rails
+## http://brakemanscanner.org/
+#brakeman:
+#  variables:
+#    SKIP_BUILDPACK: 'true'
+#  <<: *satorix
+
+
+## bundler-audit
+## Patch-level verification for Bundler
+## https://github.com/rubysec/bundler-audit
+#bundler_audit:
+#  variables:
+#    SKIP_BUILDPACK: 'true'
+#  <<: *satorix
+
+
+## Cucumber
+## Executes executable specifications written in plain language
+## https://github.com/cucumber/cucumber
+#cucumber:
+#  <<: *use_postgres
+#  <<: *satorix
+
+
+## Rails test
+## Built-in mechanisms in Rails for testing your application
+## http://guides.rubyonrails.org/testing.html
+#rails_test:
+#  <<: *use_postgres
+#  <<: *satorix
+
+
+## RSpec
+## Behaviour Driven Development for Ruby
+## http://rspec.info/
+rspec:
+  <<: *use_postgres
+  <<: *satorix
+
+
+## RuboCop
+## A Ruby static code analyzer, based on the community Ruby style guide.
+## https://github.com/bbatsov/rubocop
+#rubocop:
+#  variables:
+#    SKIP_BUILDPACK: 'true'
+#  <<: *satorix
+
+
+deploy_with_flynn:
+  environment:
+    name: $CI_COMMIT_REF_NAME
+    url: "http://$CI_PROJECT_NAME.$CI_COMMIT_REF_SLUG.$SATORIX_HOSTING_NAMESPACE"
+  stage: deploy
+  only:
+    - staging
+    - production
+  <<: *satorix
