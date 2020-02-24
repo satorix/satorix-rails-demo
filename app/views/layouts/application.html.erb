@@ -5,15 +5,10 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
     <meta name="description" content="Satorix">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <style type="text/css">
       html {
         position: relative;
@@ -58,53 +53,11 @@
       }
     </style>
   </head>
-
   <body>
-    <header>
-      <nav class="navbar navbar-expand-md navbar-light bg-light border-bottom">
-        <%= link_to image_tag("satorix-logo-full.svg", alt: "Satorix Logo", width: "120", height: "30"), root_path, class: "navbar-brand" %>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item" data-link-name="home">
-	      <%= link_to "Home ", root_path, class: "nav-link" %>
-            </li>
-            <li class="nav-item" data-link-name="polls">
-	      <%= link_to "Books ", books_path, , class: "nav-link" %>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="https://www.satorix.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learn More</a>
-              <div class="dropdown-menu" aria-labelledby="dropdown01">
-                <a class="dropdown-item" href="https://www.satorix.com/features">Features</a>
-                <a class="dropdown-item" href="https://www.satorix.com/demo">Demo</a>
-                <a class="dropdown-item" href="https://www.satorix.com/pricing">Pricing</a>
-                <a class="dropdown-item" href="https://www.satorix.com/docs">Satorix Documentation</a>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    </header>
+    <%= render 'shared/header' %>
     <main role="main">
       <%= yield %>
     </main>
-    <footer class="footer pt-3 border-top">
-      <div class="container">
-        <div class="row">
-          <div class="col-4">
-            <p class="pt-2">Satorix Inc &copy</p>
-          </div>
-          <div class="col-8">
-            <ul class="nav justify-content-end">
-              <li class="nav-item"><a class="nav-link" href="https://www.satorix.com/pricing">Pricing</a></li>
-              <li class="nav-item"><a class="nav-link" href="https://www.satorix.com/sign-up">Sign Up</a></li>
-              <li class="nav-item"><a class="nav-link" href="https://www.satorix.com/contact">Contact Us</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </footer>
+    <%= render 'shared/footer' %>
   </body>
 </html>
