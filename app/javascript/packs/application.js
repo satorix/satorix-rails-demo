@@ -18,4 +18,4 @@ require("channels")
 
 require("jquery");
 require("bootstrap");
-import "../stylesheets/application";
+import "../stylesheets/application.scss";
