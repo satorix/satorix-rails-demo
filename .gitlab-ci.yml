@@ -9,12 +9,6 @@ cache:
     - 'tmp/satorix/cache' # To cache buildpack gems between runs.
 
 
-.satorix: &satorix
-  script:
-    - gem install satorix --source https://gems.iexposure.com --no-document -v 1.3.1
-    - satorix
-
-
 ###############################################################################
 #
 # Below are resources that will be available as part of the CI pipeline.
@@ -61,6 +55,13 @@ cache:
 #    MYSQL_ROOT_PASSWORD: password # The default user is: root
 
 
+.satorix: &satorix
+  <<: *use_postgres
+  script:
+    - gem install satorix --source https://gems.iexposure.com --no-document -v 1.3.1
+    - satorix
+
+
 ###############################################################################
 #
 # Below are jobs that will run as part of the CI pipeline.
@@ -70,22 +71,18 @@ cache:
 ###############################################################################
 
 
-## Brakeman
-## Static analysis security scanner for Ruby on Rails
-## http://brakemanscanner.org/
-#brakeman:
-#  variables:
-#    SKIP_BUILDPACK: 'true'
-#  <<: *satorix
+# Brakeman
+# Static analysis security scanner for Ruby on Rails
+# http://brakemanscanner.org/
+brakeman:
+  <<: *satorix
 
 
-## bundler-audit
-## Patch-level verification for Bundler
-## https://github.com/rubysec/bundler-audit
-#bundler_audit:
-#  variables:
-#    SKIP_BUILDPACK: 'true'
-#  <<: *satorix
+# bundler-audit
+# Patch-level verification for Bundler
+# https://github.com/rubysec/bundler-audit
+bundler_audit:
+  <<: *satorix
 
 
 ## Cucumber
@@ -104,21 +101,18 @@ cache:
 #  <<: *satorix
 
 
-## RSpec
-## Behaviour Driven Development for Ruby
-## http://rspec.info/
+# RSpec
+# Behaviour Driven Development for Ruby
+# http://rspec.info/
 rspec:
-  <<: *use_postgres
   <<: *satorix
 
 
-## RuboCop
-## A Ruby static code analyzer, based on the community Ruby style guide.
-## https://github.com/bbatsov/rubocop
-#rubocop:
-#  variables:
-#    SKIP_BUILDPACK: 'true'
-#  <<: *satorix
+# RuboCop
+# A Ruby static code analyzer, based on the community Ruby style guide.
+# https://github.com/bbatsov/rubocop
+rubocop:
+  <<: *satorix
 
 
 deploy_with_flynn:
