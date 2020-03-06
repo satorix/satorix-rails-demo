@@ -1,10 +1,9 @@
-require 'rails_helper'
+# frozen_string_literal: true
+
+require "rails_helper"
 
 RSpec.describe Book, type: :model do
-
-  subject { 
-    described_class.new(author: "Anyone", title: "Anything")
-  }
+  subject { described_class.new(author: "Anyone", title: "Anything") }
 
   it "is valid with valid attributes" do
     expect(subject).to be_valid
