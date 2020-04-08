@@ -30,5 +30,5 @@ Required App Variables
 ----------------------
 
 #### The Satorix Dashboard allows input of settings that are utilized by your application. Here is a list of the required settings for this application to run:
-* `SECRET_KEY`
-  * Rails secret key used in production
+* `SECRET_KEY_BASE`
+  * Rails secret key can be generated with `rake secret`
