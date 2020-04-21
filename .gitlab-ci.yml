@@ -58,7 +58,7 @@ cache:
 .satorix: &satorix
   <<: *use_postgres
   script:
-    - gem install satorix --source https://gems.iexposure.com --no-document -v 1.5.2
+    - gem install satorix --no-document
     - satorix
 
 
