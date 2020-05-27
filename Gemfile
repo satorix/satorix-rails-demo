@@ -1,16 +1,15 @@
 # frozen_string_literal: true
 
 source "https://rubygems.org"
-git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "2.6.5"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails"
-gem "rails", "~> 6.0.2", ">= 6.0.2.1"
+gem "rails", "~> 6.0.3", ">= 6.0.3.1"
 # Use postgresql as the database for Active Record
 gem "pg", ">= 0.18", "< 2.0"
 # Use Puma as the app server
-gem "puma", "~> 4.3"
+gem "puma", "~> 4.3", ">=4.3.5"
 # Use SCSS for stylesheets
 gem "sass-rails", ">= 6"
 # Use Bootstrap
@@ -38,9 +37,7 @@ gem "satorix-rails"
 group :development, :test do
   # Call "byebug" anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
-  %w[rspec-core rspec-expectations rspec-mocks rspec-rails rspec-support].each do |lib|
-    gem lib, git: "https://github.com/rspec/#{lib}.git", branch: "master" # Previously "4-0-dev" or "4-0-maintenance" branch
-  end
+  gem 'rspec-rails', '~> 4.0.0'
 end
 
 group :development do
